@@ -5,7 +5,7 @@ const messageRoute = require("./routes/messagesRoute");
 const bodyParser = require("body-parser");
 require("./dbConnect");
 const app = express();
-
+//new commment
 app.use(bodyParser.json());
 app.use("/users", usersRoute);
 app.use("/rooms", roomsRoute)
