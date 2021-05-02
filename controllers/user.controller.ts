@@ -2,18 +2,16 @@ import User from "../models/User";
 import express from "express";
 
 const createUser = async(req: express.Request, res: express.Response) => {
-  console.log(req.body); //this isnt printing
   try {
     const newUser = new User({
       name: req.body.name,
       password: req.body.password,
       email: req.body.email
     });
-
     const finalUser = await newUser.save();
-    return res.status(201).send(finalUser);
+    return res.status(201).json(finalUser);
   } catch (error) {
-    return res.status(502).send({ error });
+    return res.status(502).json({ error });
   }
 };
 

@@ -3,10 +3,11 @@ const usersRoute = require("./routes/usersRoute");
 const roomsRoute = require("./routes/roomsRoute"); 
 const messageRoute = require("./routes/messagesRoute"); 
 const bodyParser = require("body-parser");
+const cors = require("cors")
 require("./dbConnect");
 const app = express();
 
-app.use(require('cors')); 
+app.use(cors()); 
 app.use(bodyParser.json());
 app.use("/users", usersRoute);
 app.use("/rooms", roomsRoute)
