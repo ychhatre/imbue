@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 require("./dbConnect");
 const app = express();
 
-
+app.use(require('cors')); 
 app.use(bodyParser.json());
 app.use("/users", usersRoute);
 app.use("/rooms", roomsRoute)
