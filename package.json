@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon app.ts",
-    "dev": "nodemon app.ts"
+    "start": "node dist/app.js",
+    "dev": "nodemon src/app.ts",
+    "build": "tsc -p .",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",

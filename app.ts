@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 require("./dbConnect");
 const app = express();
 
+const port = process.env.PORT || 3000
 app.use(bodyParser.json());
 app.use("/users", usersRoute);
 app.use("/rooms", roomsRoute)
