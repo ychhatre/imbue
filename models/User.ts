@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 interface IUser extends mongoose.Document {
   name: string;
   password: string;
+  email:string;
+
 }
 const UserSchema = new mongoose.Schema({
   name: {
@@ -14,6 +16,7 @@ const UserSchema = new mongoose.Schema({
   email: {
     required: true,
     type: String,
+    unique: true
   },
   password: {
     required: true,
