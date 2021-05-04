@@ -21,11 +21,20 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useHistory } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { useAuth } from "../contexts/AuthContext"; 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+  },
+  button: {
+    height:"5vh",
+    marginLeft: "165vh",
+    color: 'white',
+    fontWeight: 'bold',
+    background: 'red'
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -85,6 +94,7 @@ export default function Navbar(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
+  const { signOut } = useAuth();
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -121,7 +131,12 @@ export default function Navbar(props) {
           <Typography variant="h6" noWrap>
             {props.title}
           </Typography>
+          <Button onClick={() => {
+            signOut(); 
+            history.push('/signin')
+          }} className= {classes.button} variant="outlined" color="secondary">Log out</Button>
         </Toolbar>
+       
       </AppBar>
       <Drawer
         className={classes.drawer}
@@ -165,13 +180,6 @@ export default function Navbar(props) {
           ))}
         </List>
       </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-      </main>
     </div>
   );
 }

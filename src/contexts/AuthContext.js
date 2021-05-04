@@ -1,13 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
+
 const AuthContext = createContext();
 
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-export function AuthProvider(props) {
-  const [currentUser, setCurrentUser] = useState({});
+export function AuthProvider({ children }) {
+  const [currentUser, setCurrentUser] = useState(); 
 
   const signOut = () => {
     Cookies.remove("user");
@@ -54,7 +55,6 @@ export function AuthProvider(props) {
     const user = await response.json();
 
     if (response.status === 201) {
-        console.log("User is:", user);
       setCurrentUser(user);
       Cookies.set("user", user);
     } else {
@@ -78,6 +78,6 @@ export function AuthProvider(props) {
   };
 
   return (
-    <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
+    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
   );
 }

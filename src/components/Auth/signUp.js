@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import bcrypt from "bcryptjs"; 
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,35 +45,20 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
-  const { signUp } = useAuth(); 
-  
+  const { signUp } = useAuth();
+
   async function handleSubmit(e) {
-    setIsSubmitting(true); 
-    e.preventDefault();   
+    setIsSubmitting(true);
+    e.preventDefault();
     try {
-      const result = await signUp(name, password, email); 
-      console.log("The result is: ", result)
-      history.push('/home'); 
+      const hashedPassword =  await bcrypt.hash(password, 10);
+      await signUp(name, hashedPassword, email);
+      history.push("/home");
     } catch (error) {
       
     }
   }
-  // const signUp = async (e) => {
-  //   setIsSubmitting(true);
-  //   const response = await fetch("https://imbue-backend.herokuapp.com/users", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       name,
-  //       password,
-  //       email,
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   history.push("/home");
 
-  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -95,7 +81,6 @@ export default function SignUp() {
                 label="Name"
                 autoFocus
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setName(e.target.value);
                 }}
               />
@@ -124,7 +109,6 @@ export default function SignUp() {
                 id="password"
                 autoComplete="current-password"
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setPassword(e.target.value);
                 }}
               />

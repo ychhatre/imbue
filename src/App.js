@@ -6,7 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Create from "./components/Create";
 import Rooms from "./components/Rooms"
 import Settings from "./components/Settings";
-import Profile from "./components/Profile";
+// import Profile from "./components/Profile";
 import PrivateRoute from "./components/PrivateRoute"; 
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -17,11 +17,11 @@ function App() {
         <AuthProvider>
           <Route path="/signup" component={SignUp}/>
           <Route path="/signin" component={SignIn} /> 
-          <PrivateRoute component={Home} path="/home" />
+          <PrivateRoute path="/home" component={Home} />
           <PrivateRoute path="/create" component={Create} />
           <PrivateRoute path="/rooms" component={Rooms} />
-          <PrivateRoute path="/home" component={Settings} />
-          <Route path="/profile" component={Profile} />
+          <PrivateRoute path="/settings" component={Settings} />
+          {/* <PrivateRoute path="/profile" component={Profile} /> */}
         
         </AuthProvider>
       </Switch>
