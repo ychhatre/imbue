@@ -21,7 +21,7 @@ const login = async (req: express.Request, res: express.Response) => {
 
     if (currUser) {
       if (currUser.password === req.body.password) {
-        return res.status(201).send({ status: "success" });
+        return res.status(201).send({ status: "success", currUser });
       } else {
         return res.status(401).send({ status: "incorrect password" });
       }
