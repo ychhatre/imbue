@@ -1,22 +1,29 @@
-import SignUp from "./signUp";
+import SignUp from "./components/Auth/signUp";
 import React from "react";
-import SignIn from "./signIn";
-import Nav from "./Nav";
+import SignIn from "./components/Auth/signIn";
+import Home from "./components/Home";
+import { AuthProvider } from "./contexts/AuthContext";
+import Create from "./components/Create";
+import Rooms from "./components/Rooms"
+import Settings from "./components/Settings";
+import Profile from "./components/Profile";
+import PrivateRoute from "./components/PrivateRoute"; 
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path = "/signup">
-          <SignUp /> 
-        </Route>
-        <Route path = "/signin">
-          <SignIn /> 
-        </Route>
-        <Route path = "/home">
-          <Nav /> 
-        </Route>
+        <AuthProvider>
+          <Route path="/signup" component={SignUp}/>
+          <Route path="/signin" component={SignIn} /> 
+          <PrivateRoute component={Home} path="/home" />
+          <PrivateRoute path="/create" component={Create} />
+          <PrivateRoute path="/rooms" component={Rooms} />
+          <PrivateRoute path="/home" component={Settings} />
+          <Route path="/profile" component={Profile} />
+        
+        </AuthProvider>
       </Switch>
     </Router>
   );

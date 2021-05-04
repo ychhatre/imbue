@@ -8,8 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { useHistory } from "react-router-dom"; 
- 
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -36,35 +37,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 export default function SignUp() {
   const classes = useStyles();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const history = useHistory(); 
-
-  const signUp = async(e) => {
+  const history = useHistory();
+  const { signUp } = useAuth(); 
+  
+  async function handleSubmit(e) {
     setIsSubmitting(true); 
-    const response = await fetch("https://imbue-backend.herokuapp.com/users", {
-      method: "POST",
-      body: JSON.stringify({
-        name: name,
-        password: password,
-        email: email 
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    console.log(await response.json()); 
-    e.preventDefault(); 
-    // redirrect code
-    history.push("/home")
-    
-  };
+    e.preventDefault();   
+    try {
+      const result = await signUp(name, password, email); 
+      console.log("The result is: ", result)
+      history.push('/home'); 
+    } catch (error) {
+      
+    }
+  }
+  // const signUp = async (e) => {
+  //   setIsSubmitting(true);
+  //   const response = await fetch("https://imbue-backend.herokuapp.com/users", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       name,
+  //       password,
+  //       email,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   history.push("/home");
+
+  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -76,7 +84,7 @@ export default function SignUp() {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} >
+            <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
@@ -92,7 +100,7 @@ export default function SignUp() {
                 }}
               />
             </Grid>
-                
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -128,7 +136,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => signUp(e)}
+            onClick={(e) => handleSubmit(e)}
             disabled={isSubmitting}
           >
             Sign Up
