@@ -14,8 +14,7 @@ app.use("/rooms", roomsRoute)
 app.use("/messages", messageRoute)
 
 app.get("/", (req, res) => {
-  
   res.send("Hello Yash!");
 });
 
-app.listen(process.env.PORT || 5000, () => console.log("Server is running on port 3000"));
+app.listen(process.env.PORT || 5000, () => console.log("Server is running on port 5000"));
