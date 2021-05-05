@@ -45,7 +45,7 @@ export default function SignIn() {
     try {
       
      await login(email, password);
-      history.push('/home')
+      history.push('/')
     } catch (error) {
       console.error(error);
     }

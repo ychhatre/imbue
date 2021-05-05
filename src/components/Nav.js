@@ -180,6 +180,13 @@ export default function Navbar(props) {
           ))}
         </List>
       </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+      </main>
     </div>
   );
 }
