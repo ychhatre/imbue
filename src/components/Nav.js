@@ -23,7 +23,6 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { useAuth } from "../contexts/AuthContext"; 
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "165vh",
     color: 'white',
     fontWeight: 'bold',
-    background: 'red'
+    background: '#86c232',
+    borderColor: "#86c232"
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    width: `calc(100% - ${240}px)`,
+    marginLeft: 240,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -57,17 +57,16 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   drawer: {
-    width: drawerWidth,
+    width: 240,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: 240,
   },
   drawerHeader: {
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: "flex-end",
   },
@@ -78,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: -240,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -87,6 +86,10 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  text: {
+    color: "#86c232",
+    fontWeight: "bold"
+  }
 }));
 
 export default function Navbar(props) {
@@ -112,7 +115,7 @@ export default function Navbar(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        style={{ background: "#000000" }}
+        style={{ background: "#222629" }}
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -128,13 +131,13 @@ export default function Navbar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className={classes.text}>
             {props.title}
           </Typography>
           <Button onClick={() => {
             signOut(); 
             history.push('/signin')
-          }} className= {classes.button} variant="outlined" color="secondary">Log out</Button>
+          }} className= {classes.button} variant="outlined">Log out</Button>
         </Toolbar>
        
       </AppBar>

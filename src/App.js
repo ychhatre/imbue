@@ -10,6 +10,7 @@ import Settings from "./components/Settings";
 import PrivateRoute from "./components/PrivateRoute";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 function App() {
   return (
     <Router>
@@ -19,7 +20,6 @@ function App() {
           <Route path="/signin" component={SignIn} />
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute path="/create" component={Create} />
-          {/* <PrivateRoute path="/rooms" component={Rooms} /> */}
           <PrivateRoute path="/settings" component={Settings} />
           {/* <PrivateRoute path="/profile" component={Profile} /> */}
           <Route exact path="/rooms" component={Rooms} />

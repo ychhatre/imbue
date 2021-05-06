@@ -5,7 +5,7 @@ function Home() {
   const { currentUser } = useAuth();
   console.log("CurrentUser: ",currentUser); 
   return (
-    <div style={{ background: '#3a3b3c', height: '100vh',}}>
+    <div style={{ background: '#222629', height: '100vh',}}>
       <Navbar title="Imbue"/>
     </div>
   );
