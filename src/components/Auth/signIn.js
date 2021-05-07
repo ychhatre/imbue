@@ -12,7 +12,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import bcrypt from "bcryptjs"; 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
