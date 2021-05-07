@@ -161,7 +161,7 @@ export default function Navbar(props) {
         </div>
         <Divider />
         <List>
-          {["create", "rooms", "settings", "profile"].map((text, index) => (
+          {["create", "settings", "profile"].map((text, index) => (
             <ListItem
               button
               key={text}

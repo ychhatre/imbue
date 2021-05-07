@@ -13,24 +13,52 @@ import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import bcrypt from "bcryptjs";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+
+const customTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#86c232"
+    },
+    secondary: {
+      main: "#222629"
+    }
+  }
+});
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    backgroundColor: "#222629"
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "center"
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#86c232",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+    borderColor: "#86c232",
+  
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#86c232",
+    '&:hover': {
+      backgroundColor: '#222629',
+      color: 'white',
+    },
+
   },
+  input: {
+    color: "white",
+  }
 }));
 
 export default function SignIn() {
@@ -76,7 +104,8 @@ export default function SignIn() {
   // };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div style={{ background: '#222629', height: '100vh', color:'white' }}>
+    <Container component="main" maxWidth="xs" className={classes.root}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}></Avatar>
@@ -84,34 +113,45 @@ export default function SignIn() {
           Sign in
         </Typography>
         <form className={classes.form} noValidate>
+          <ThemeProvider theme={customTheme}>
           <TextField
-            variant="outlined"
+            variant="standard"
             margin="normal"
-            required
+            InputLabelProps={{
+              className: classes.input
+            }}
+            InputProps={{
+              className: classes.input
+            }}
             fullWidth
             id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
             autoFocus
+            color="primary"
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
-            variant="outlined"
+            color="primary"
+            InputProps={{
+              className: classes.input
+            }}
+            InputLabelProps={{
+              className: classes.input
+            }}
+            variant="standard"
             margin="normal"
-            required
+            Inp
             fullWidth
-            name="password"
+            name="password" 
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+          </ThemeProvider>
           <Button
             // type="submit"
             fullWidth
@@ -122,14 +162,9 @@ export default function SignIn() {
           >
             Sign In
           </Button>
-          <Grid container>
-            {/* <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid> */}
+          <Grid container justify="center">
             <Grid item>
-              <Link href="/signIn" justify="center">
+              <Link href="/signUp" style={{color: "white", textAlign: "center"}}>
                 Don't have an account? Sign Up
               </Link>
             </Grid>
@@ -137,5 +172,6 @@ export default function SignIn() {
         </form>
       </div>
     </Container>
+    </div>
   );
 }
