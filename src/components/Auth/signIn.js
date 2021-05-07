@@ -42,9 +42,8 @@ export default function SignIn() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      
-     await login(email, password);
-      history.push('/')
+      await login(email, password);
+      history.push("/");
     } catch (error) {
       console.error(error);
     }
