@@ -8,8 +8,8 @@ export const useAuth = () => {
 };
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(); 
-  const [loading, setLoading] = useState(true); 
+  const [currentUser, setCurrentUser] = useState();
+  const [loading, setLoading] = useState(true);
   const signOut = () => {
     Cookies.remove("user");
     setCurrentUser(null);
@@ -30,10 +30,10 @@ export function AuthProvider({ children }) {
       }
     );
     const data = await response.json();
-    const user = data["currUser"]
+    const user = data["currUser"];
     if (response.status === 201) {
       setCurrentUser(user);
-      Cookies.set("user", user, { expires: 7});
+      Cookies.set("user", user, { expires: 7 });
     } else {
       setCurrentUser(null);
     }
@@ -56,7 +56,7 @@ export function AuthProvider({ children }) {
 
     if (response.status === 201) {
       setCurrentUser(user);
-      Cookies.set("user", user, { expires: 7});
+      Cookies.set("user", user, { expires: 7 });
     } else {
       setCurrentUser(null);
     }
@@ -67,7 +67,10 @@ export function AuthProvider({ children }) {
     const user = Cookies.get("user");
     if (user) {
       setCurrentUser(user);
-      setLoading(false)
+      setLoading(false);
+    } else {
+      setCurrentUser(null);
+      setLoading(false);
     }
   }, []);
 
@@ -79,6 +82,8 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
   );
 }
