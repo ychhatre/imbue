@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import bcrypt from "bcryptjs"; 
+import bcrypt from "bcryptjs";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -43,9 +43,8 @@ export default function SignIn() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      
-     await login(email, password);
-      history.push('/')
+      await login(email, password);
+      history.push("/");
     } catch (error) {
       console.error(error);
     }
