@@ -4,10 +4,9 @@ import SignIn from "./components/Auth/signIn";
 import Home from "./components/Home";
 import { AuthProvider } from "./contexts/AuthContext";
 import Create from "./components/Create";
-import Rooms from "./components/Rooms";
 import Settings from "./components/Settings";
-// import Profile from "./components/Profile";
 import PrivateRoute from "./components/PrivateRoute";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -20,9 +19,8 @@ function App() {
           <Route path="/signin" component={SignIn} />
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute path="/create" component={Create} />
-          <PrivateRoute path="/settings" component={Settings} /> */}
+          <PrivateRoute path="/settings" component={Settings} />
           {/* <PrivateRoute path="/profile" component={Profile} /> */}
-          <Route exact path="/rooms" component={Rooms} />
         </Switch>
       </AuthProvider>
     </Router>
