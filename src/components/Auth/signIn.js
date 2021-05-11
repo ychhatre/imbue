@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import {Container, Jumbotron, Button, Form} from "react-bootstrap";
+import {Container, Jumbotron, Button, Form, Card} from "react-bootstrap";
 
 // const customTheme = createMuiTheme({
 //   palette: {
@@ -13,11 +13,7 @@ import {Container, Jumbotron, Button, Form} from "react-bootstrap";
 //     }
 //   }
 // });
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     display: "flex",
-//     backgroundColor: "#222629"
-//   },
+
 //   paper: {
 //     marginTop: theme.spacing(8),
 //     display: "flex",
@@ -174,38 +170,53 @@ export default function SignIn() {
     //     </p>
     //   </Jumbotron>
     // <div style={{ backgroundColor: "black"}}>
-    <>
-      <div style={{ background: "#222629", height: "100vh", color: "white" }}>
-        <Container style={{ width: "50%" }}>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </Form.Group>
+    <div>
+      <div style={{ background: "#222629", height: "100vh", color: "white", padding: "10%"}}>
+        <Container style={{width: "30%"}}>
+        <Card
+            style={{ background: "#222629"}}
 
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Form.Group>
+            text='white'
 
-            <Button variant="success" type="submit">
-              Submit
+        >
+          <Card.Header>Sign In</Card.Header>
+          <Card.Body>
+            
+              <Form onSubmit={handleSubmit} >
+                <Form.Group controlId="email">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="mb-4"
+                    placeholder="Enter email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={{ background: "#222629", color: "white", marginBottom: "5%" }}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    style={{background: "#222629", color:"white", marginBottom:"5%"}}
+                    type="password"
+                    placeholder="Enter Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+
+                <Button type="submit" style={{ width: "100%", background:"#51c4d3"}}>
+                  Submit
             </Button>
-          </Form>
+            </Form>
+          </Card.Body>
+        </Card>
+        
+          
         </Container>
         </div>
-      </>
-      //{" "}
+      </div>
  
   );
 }
