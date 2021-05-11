@@ -2,23 +2,32 @@ import React from "react";
 import Navbar from "./Nav";
 import { useAuth } from "../contexts/AuthContext";
 import { makeStyles } from "@material-ui/core";
-import { Card, Form, Button, Container } from "react-bootstrap";
+import { Card, Form, Button } from "react-bootstrap";
+
+const useStyles = makeStyles((theme) => ({
+  form: {
+    paddingLeft: "50px"
+  }
+}));
+
 
 export default function Create() {
 
   const { currentUser } = useAuth();
 
   return (
-    <Card style={{ width: '18rem' }}>
-  <Card.Img variant="top" src="holder.js/100px180" />
-  <Card.Body>
-    <Card.Title>Card Title</Card.Title>
-    <Card.Text>
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
-    </Card.Text>
-    <Button variant="primary">Go somewhere</Button>
-  </Card.Body>
-</Card>
+    <div style={{ background: "#3a3b3c", height: "100vh" }}>
+      <Navbar title="Create" />
+      <form className = "form">
+        <p>Title:</p>
+        <input
+          type="text"
+        />
+        <p>Summary of Room:</p> 
+        <input
+          type="text"
+        />
+      </form>
+    </div>
   );
 }
