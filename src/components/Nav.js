@@ -1,65 +1,113 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import { useHistory } from "react-router-dom";
-import { Button, Dialog } from "@material-ui/core";
+import React, { useState } from "react";
+import { useHistory, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Form, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Card, Form, Navbar, NavDropdown, Nav, FormControl, Button, Modal } from "react-bootstrap";
 
-// function NewRoomModal() {
-//   return (
-//     <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-//   aria-hidden="true">
-//   <div class="modal-dialog" role="document">
-//     <div class="modal-content">
-//       <div class="modal-header text-center">
-//         <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-//         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-//           <span aria-hidden="true">&times;</span>
-//         </button>
-//       </div>
-//       <div class="modal-body mx-3">
-//         <div class="md-form mb-5">
-//           <i class="fas fa-envelope prefix grey-text"></i>
-//           <input type="email" id="defaultForm-email" class="form-control validate"></input>
-//           <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
-//         </div>
+function CreateModal(props) {
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("");
 
-//         <div class="md-form mb-4">
-//           <i class="fas fa-lock prefix grey-text"></i>
-//           <input type="password" id="defaultForm-pass" class="form-control validate"></input>
-//           <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
-//         </div>
-
-//       </div>
-//       <div class="modal-footer d-flex justify-content-center">
-//         <button class="btn btn-default">Login</button>
-//       </div>
-//     </div>
-//   </div>
-// </div>
-//   )
-// }
-
-export default function Navbar(props) {
-  const history = useHistory();
-  const { signOut } = useAuth();
-  const [open, setOpen] = React.useState(false);
+  async function handleCreate() {
+    const finalName = name.toLowerCase().replace(/\s+/g, '');
+    const response = await fetch("https://api.daily.co/v1/rooms", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+      },
+      body: JSON.stringify({
+        properties: {
+          enable_network_ui: false,
+          enable_prejoin_ui: true,
+          enable_screenshare: true,
+          enable_chat: true,
+          start_video_off: true
+        },
+        privacy: 'public',
+        name: finalName
+      })
+    });
+    const result = await response.json(); 
+    
+  }
 
   return (
-    <>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-        </Nav>
-      </Navbar>
-    </>
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      variant="dark"
+      style={{ background: "#222629" }}
+
+    >
+      <Modal.Header style={{  textAlign: "center" }}>
+        <Modal.Title style={{ textAlign: "center" }} id="on tained-modal-tit le-vcenter" >
+          Create A Room
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body style={{ backgroundColor: "#222629s" }}>
+
+      
+        <Form onClick={handleCreate}>
+          <Form.Group controlId="name">
+            <Form.Label>Room Name</Form.Label>
+            <Form.Control
+              type="text"
+              className="mb-4"
+              placeholder="Name of Room"
+              onChange={(e) => setName(e.target.value)}
+              style={{ marginBottom: "5%" }}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              style={{ marginBottom: "5%" }}
+              type="text"
+              placeholder="Enter Desription"
+
+              required
+            />
+          </Form.Group>
+
+          <Button type="submit" style={{ width: "100%", background: "#51c4d3" }}>
+            Submit
+            </Button>
+        </Form>
+
+
+      </Modal.Body>
+
+    </Modal>
   );
 }
+export default function NavBar(props) {
+  const history = useHistory();
+
+  const { signOut } = useAuth();
+  const [open, setOpen] = React.useState(false);
+  const [modalShow, setModalShow] = React.useState(false);
+  return (
+
+    <Navbar style={{ height: "10vh", paddingLeft: "2vh", paddingRight: "2vh" }} bg="dark" variant="dark">
+      <Nav className="container-fluid">
+        <Nav.Item>
+          <Navbar.Brand style={{ color: "#51c4d3" }} to="/">Imbue</Navbar.Brand>
+        </Nav.Item>
+        <Nav.Item className="button">
+          <Button style={{ backgroundColor: "#51c4d3" }} onClick={() => setModalShow(true)} >Create</Button>
+          <CreateModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
+        </Nav.Item>
+      </Nav>
+
+    </Navbar>
+
+  );
+}
+
