@@ -4,6 +4,8 @@ const roomsRoute = require("./routes/roomsRoute");
 const messageRoute = require("./routes/messagesRoute"); 
 const bodyParser = require("body-parser");
 const cors = require("cors")
+import User from "./models/User";
+
 require("./dbConnect");
 const app = express();
 

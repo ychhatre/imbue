@@ -1,22 +1,17 @@
 import User from "../models/User";
 import express from "express";
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const createUser = async (req: express.Request, res: express.Response) => {
   try {
- //   const rawPassword = req.body.password;
-    
- //   const hashedPassword = await bcrypt.hash(rawPassword, 10);
-    
     const newUser = new User({
       name: req.body.name,
       password: req.body.password,
       email: req.body.email,
     });
     const finalUser = await newUser.save();
-    return res.status(201).json(finalUser); 
-   
+    return res.status(201).json(finalUser);
   } catch (error) {
     return res.status(502).json({ error });
   }
@@ -28,8 +23,11 @@ const login = async (req: express.Request, res: express.Response) => {
 
     if (currUser) {
       const unhashedPassword = req.body.password;
-      
-      const passwordStat = await bcrypt.compare(unhashedPassword, currUser.password);
+
+      const passwordStat = await bcrypt.compare(
+        unhashedPassword,
+        currUser.password
+      );
 
       if (passwordStat) {
         return res.status(201).send({ status: "success", currUser });
@@ -62,4 +60,20 @@ const getAllUsers = async (req: express.Request, res: express.Response) => {
   }
 };
 
-export default { createUser, getSingleUser, getAllUsers, login };
+const searchUsers = async (req: express.Request, res: express.Response) => {
+  console.log("Search term:", req.query.searchTerm);
+  try {
+    if(req.query.searchTerm) {
+      const users = await User.find({
+        "name":{ "$regex": `${req.query.searchTerm}`}
+      });
+      return res.status(200).send(users);
+    }
+   
+  } catch (error) {
+    return res.status(502).send({ error });
+  }
+  return res.status(200).send(req.query.searchTerm);
+};
+
+export default { createUser, getSingleUser, getAllUsers, login, searchUsers };

@@ -6,5 +6,6 @@ const userRouter: express.Router = express.Router();
 userRouter.post("/", controller.createUser);
 userRouter.post("/login", controller.login);
 userRouter.get("/:id", controller.getSingleUser);
+userRouter.get("/", controller.searchUsers)
 userRouter.get("/", controller.getAllUsers);
 export = userRouter;
