@@ -24,6 +24,7 @@ function RoomCard({
 
 export default function Home() {
   const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true); 
   async function getRooms() {
     const response = await fetch("https://api.daily.co/v1/rooms", {
       method: "GET",
@@ -36,17 +37,19 @@ export default function Home() {
       // }})
     })
     const data = await response.json(); 
+    setLoading(false); 
     console.log(data.data); 
     setRooms(data.data); 
   }
   useEffect(() => {
     getRooms(); 
+  
   }, [rooms])
   return (
     <div style={{ background: "white" }}>
       <NavBar />
-      {rooms.map(room => (
-        <RoomCard title={room.name}/>
+      {loading && rooms.map(room => (
+         <RoomCard title={room.name}/>
       ))}
       <div style={{ background: "black" }}> </div>
     </div>
