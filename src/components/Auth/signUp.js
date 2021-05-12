@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Card, Form, Button, Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
 import bcrypt from "bcryptjs";
 
 
@@ -72,7 +71,7 @@ export default function SignUp() {
                   />
                 </Form.Group>
 
-                <Button type="submit" style={{ width: "100%", background: "#51c4d3" }}>
+                <Button type="submit" style={{ width: "100%", background: "#51c4d3" }} disabled={isSubmitting}>
                   Submit
             </Button>
               </Form>
