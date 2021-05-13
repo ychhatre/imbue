@@ -5,10 +5,12 @@ const bcrypt = require("bcrypt");
 
 const createUser = async (req: express.Request, res: express.Response) => {
   try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new User({
       name: req.body.name,
-      password: req.body.password,
+      password: hashedPassword,
       email: req.body.email,
+      role: req.body.role
     });
     const finalUser = await newUser.save();
     return res.status(201).json(finalUser);
@@ -65,7 +67,7 @@ const searchUsers = async (req: express.Request, res: express.Response) => {
   try {
     if(req.query.searchTerm) {
       const users = await User.find({
-        "name":{ "$regex": `${req.query.searchTerm}`}
+        "name":{ "$regex": `${req.query.searchTerm}`, "$options": "i"}
       });
       return res.status(200).send(users);
     }

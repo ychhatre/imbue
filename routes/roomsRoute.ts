@@ -6,4 +6,5 @@ const roomRouter: express.Router = express.Router();
 roomRouter.post("/", controller.createRoom);
 roomRouter.get("/:id", controller.getSingleRoom);
 roomRouter.get("/", controller.getAllRooms);
-export = roomRouter;
+
+export default roomRouter; 

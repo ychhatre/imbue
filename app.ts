@@ -1,19 +1,15 @@
 import express from "express";
-const usersRoute = require("./routes/usersRoute");
-const roomsRoute = require("./routes/roomsRoute"); 
-const messageRoute = require("./routes/messagesRoute"); 
-const bodyParser = require("body-parser");
-const cors = require("cors")
-import User from "./models/User";
+import usersRoute from "./routes/usersRoute"; 
+import roomsRoute from "./routes/roomsRoute"; 
+import companiesRouter from "./routes/companyRoute"; 
 
 require("./dbConnect");
 const app = express();
 
-app.use(cors()); 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use("/users", usersRoute);
 app.use("/rooms", roomsRoute)
-app.use("/messages", messageRoute)
+app.use("/companies", companiesRouter); 
 
 app.get("/", (req, res) => {
   res.send("Hello Yash!");
