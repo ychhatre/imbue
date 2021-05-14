@@ -8,6 +8,7 @@ function RoomCard({
   title,
   summary = "Hi this is a template card!",
   urlToRoom,
+  timeCreated,
 }) {
   return (
     <a style={{ cursor: 'pointer', color: "white", textDecoration: "none"}} href = {urlToRoom}>
@@ -15,7 +16,7 @@ function RoomCard({
       <Card.Body>
           <Card.Text style={{ color: "white", fontSize: 25}} href="#">{title}</Card.Text>
         <Card.Text style={{ color: "white" }}>{summary}</Card.Text>
-        <Card.Text style={{ color: "white"}} href="#">Participants: 1</Card.Text>
+        <Card.Text style={{ color: "white"}} href="#">{timeCreated.slice(5,10)}</Card.Text>
         <span class="dot"></span>
       </Card.Body>
     </Card>
@@ -46,7 +47,8 @@ export default function Home() {
     <body style={{ background: "#222629"}}>
       <NavBar />
       {rooms.map((room) => (
-        <RoomCard title={room.name} key={room.id} urlToRoom={room.url} />
+       
+        <RoomCard title={room.name} key={room.id} urlToRoom={room.url} timeCreated={room.created_at}/>
       ))}
     </body>
   );
