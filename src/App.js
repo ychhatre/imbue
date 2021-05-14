@@ -8,6 +8,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Search from "./components/Search";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/signin" component={SignIn} />
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute path="/settings" component={Settings} />
-          {/* <PrivateRoute path="/profile" component={Profile} /> */}
+          <PrivateRoute path = "/search/:id" component={Search} />
         </Switch>
       </AuthProvider>
     </Router>
