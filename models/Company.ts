@@ -4,7 +4,7 @@ import { IUser } from "./User";
 interface ICompany extends mongoose.Document {
     name: string 
     description: string
-    owner: IUser,
+    // owner: IUser,
 }
 
 const CompanySchema = new mongoose.Schema({
@@ -16,11 +16,11 @@ const CompanySchema = new mongoose.Schema({
         required: true, 
         type: String 
     },
-    owner: {
-        required: true,
-        type: mongoose.Types.ObjectId,
-        ref: "User",
-    }
+    // owner: {
+    //     required: true,
+    //     type: mongoose.Types.ObjectId,
+    //     ref: "User",
+    // }
 })
 
 export default mongoose.model<ICompany>("Company", CompanySchema);
