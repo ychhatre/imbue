@@ -6,7 +6,7 @@ import cors from "cors";
 
 require("./dbConnect");
 const app = express();
-app.use(cors); 
+app.use(cors()); 
 app.use(express.json());
 app.use("/users", usersRoute);
 app.use("/rooms", roomsRoute)
