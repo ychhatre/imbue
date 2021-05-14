@@ -10,18 +10,16 @@ function RoomCard({
   urlToRoom,
 }) {
   return (
+    <a style={{ cursor: 'pointer', color: "white", textDecoration: "none"}} href = {urlToRoom}>
     <Card style={{ width: "50rem", backgroundColor: "#51c4d3", borderRadius: "1vh", margin: "5vh" }}>
       <Card.Body>
-        <Card.Body>
-          <Card.Text href="#">{title}</Card.Text>
-          <Card.Link href="#">Participants: 1</Card.Link>
-        </Card.Body>
+          <Card.Text style={{ color: "white", fontSize: 25}} href="#">{title}</Card.Text>
         <Card.Text style={{ color: "white" }}>{summary}</Card.Text>
-        <Card.Text style={{ color: "white" }}>
-          <a href={urlToRoom}> Link to Room</a>
-        </Card.Text>
+        <Card.Text style={{ color: "white"}} href="#">Participants: 1</Card.Text>
+        <span class="dot"></span>
       </Card.Body>
     </Card>
+    </a>
   );
 }
 
@@ -45,12 +43,11 @@ export default function Home() {
     getRooms();
   }, []);
   return (
-    <div style={{ background: "white" }}>
+    <body style={{ background: "#222629"}}>
       <NavBar />
       {rooms.map((room) => (
         <RoomCard title={room.name} key={room.id} urlToRoom={room.url} />
       ))}
-      <div style={{ background: "black" }}> </div>
-    </div>
+    </body>
   );
 }

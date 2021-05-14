@@ -53,7 +53,7 @@ function CreateModal(props) {
           Create A Room
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ backgroundColor: "#222629s" }}>
+      <Modal.Body style={{ backgroundColor: "#222629" }}>
         <Form onClick={handleCreate}>
           <Form.Group controlId="name">
             <Form.Label>Room Name</Form.Label>
@@ -183,7 +183,7 @@ export default function NavBar(props) {
     >
       <Nav className="container-fluid">
         <Nav.Item>
-          <Navbar.Brand style={{ color: "#51c4d3" }} to="/">
+          <Navbar.Brand style={{ color: "#51c4d3", fontSize: "30px" }} to="/">
             Imbue
           </Navbar.Brand>
         </Nav.Item>
