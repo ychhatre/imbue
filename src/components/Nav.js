@@ -3,6 +3,7 @@ import { useHistory, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { Card, Form, Navbar, NavDropdown, Nav, FormControl, Button, Modal } from "react-bootstrap";
 
+
 function CreateModal(props) {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("");
@@ -30,7 +31,7 @@ function CreateModal(props) {
     const result = await response.json(); 
     
   }
-
+  
   return (
     <Modal
       {...props}
@@ -84,6 +85,89 @@ function CreateModal(props) {
     </Modal>
   );
 }
+
+function CreateCompanyModal(props) {
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("");
+
+  async function handleCreate() {
+    const finalName = name.toLowerCase().replace(/\s+/g, '');
+    const response = await fetch("https://api.daily.co/v1/rooms", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+      },
+      body: JSON.stringify({
+        properties: {
+          enable_network_ui: false,
+          enable_prejoin_ui: true,
+          enable_screenshare: true,
+          enable_chat: true,
+          start_video_off: true
+        },
+        privacy: 'public',
+        name: finalName
+      })
+    });
+    const result = await response.json(); 
+    
+  }
+  
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      variant="dark"
+      style={{ background: "#222629" }}
+
+    >
+      <Modal.Header style={{  textAlign: "center" }}>
+        <Modal.Title style={{ textAlign: "center" }} id="on tained-modal-tit le-vcenter" >
+          Create A Company
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body style={{ backgroundColor: "#222629s" }}>
+
+      
+        <Form onClick={handleCreate}>
+          <Form.Group controlId="name">
+            <Form.Label>Company Name</Form.Label>
+            <Form.Control
+              type="text"
+              className="mb-4"
+              placeholder="Name of Room"
+              onChange={(e) => setName(e.target.value)}
+              style={{ marginBottom: "5%" }}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="description">
+            <Form.Label>Company Description</Form.Label>
+            <Form.Control
+              style={{ marginBottom: "5%" }}
+              type="text"
+              placeholder="Enter Desription"
+
+              required
+            />
+          </Form.Group>
+
+          <Button type="submit" style={{ width: "100%", background: "#51c4d3" }}>
+            Create Company
+            </Button>
+        </Form>
+
+
+      </Modal.Body>
+
+    </Modal>
+  );
+}
+
 export default function NavBar(props) {
   const history = useHistory();
 
@@ -97,13 +181,23 @@ export default function NavBar(props) {
         <Nav.Item>
           <Navbar.Brand style={{ color: "#51c4d3" }} to="/">Imbue</Navbar.Brand>
         </Nav.Item>
-        <Nav.Item className="button">
-          <Button style={{ backgroundColor: "#51c4d3" }} onClick={() => setModalShow(true)} >Create</Button>
-          <CreateModal
+        <Nav>
+      <Nav.Link onClick={() => setModalShow(true)}> Create Company </Nav.Link>
+      <CreateModal
             show={modalShow}
             onHide={() => setModalShow(false)}
           />
-        </Nav.Item>
+      <Nav.Link onClick={() => setModalShow(true)}>
+        Create Room
+      </Nav.Link>
+      <CreateCompanyModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
+      <Nav.Link>
+        Logout
+      </Nav.Link>
+    </Nav>
       </Nav>
 
     </Navbar>

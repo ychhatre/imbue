@@ -8,7 +8,7 @@ function RoomCard({
   urlToRoom = "url",
 }) {
   return (
-    <Card style={{ width: "30rem", backgroundColor: "#51c4d3", borderRadius: "1vh", margin: "5vh" }}>
+    <Card style={{ width: "50rem", backgroundColor: "#51c4d3", borderRadius: "1vh", margin: "5vh" }}>
       <Card.Body>
         <Card.Title style={{ color: "white" }}>{title} </Card.Title>
         <Card.Text style={{ color: "white" }}>
