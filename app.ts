@@ -2,10 +2,11 @@ import express from "express";
 import usersRoute from "./routes/usersRoute"; 
 import roomsRoute from "./routes/roomsRoute"; 
 import companiesRouter from "./routes/companyRoute"; 
+import cors from "cors"; 
 
 require("./dbConnect");
 const app = express();
-
+app.use(cors); 
 app.use(express.json());
 app.use("/users", usersRoute);
 app.use("/rooms", roomsRoute)
