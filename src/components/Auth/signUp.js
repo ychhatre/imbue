@@ -91,7 +91,6 @@ export default function SignUp() {
                   <Form.Check
                     custom
                     name="radio"
-
                     type="radio"
                     id="custom-radio"
                     label=" Investor"
