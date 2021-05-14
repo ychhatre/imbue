@@ -7,7 +7,7 @@ const createCompany = async (req: express.Request, res: express.Response) => {
     const newCompany = new Company({
       name,
       description,
-      // owner: mongoose.Types.ObjectId(owner),
+      owner: mongoose.Types.ObjectId(owner),
     });
     const savedCompany = await newCompany.save();
     const finalCompany = savedCompany.populate("owner")
