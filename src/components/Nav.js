@@ -53,7 +53,7 @@ function CreateModal(props) {
           Create A Room
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ backgroundColor: "#222629" }}>
+      <Modal.Body style={{ }}>
         <Form onClick={handleCreate}>
           <Form.Group controlId="name">
             <Form.Label>Room Name</Form.Label>
@@ -174,6 +174,7 @@ function CreateCompanyModal(props) {
 export default function NavBar(props) {
   const history = useHistory();
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalCreateShow, setCreateModalShow] = React.useState(false);
   const [query, setQuery] = React.useState("")
   return (
     <Navbar
@@ -188,17 +189,17 @@ export default function NavBar(props) {
           </Navbar.Brand>
         </Nav.Item>
         <Nav>
-      <Nav.Link onClick={() => setModalShow(true)}> Create Company </Nav.Link>
+      <Nav.Link onClick={() => setModalShow(true)}> Create Room </Nav.Link>
       <CreateModal
             show={modalShow}
             onHide={() => setModalShow(false)}
           />
-      <Nav.Link onClick={() => setModalShow(true)}>
-        Create Room
+      <Nav.Link onClick={() => setCreateModalShow(true)}>
+        Create Company
       </Nav.Link>
       <CreateCompanyModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
+            show={modalCreateShow}
+            onHide={() => setCreateModalShow(false)}
           />
       <Nav.Link>
         Logout
