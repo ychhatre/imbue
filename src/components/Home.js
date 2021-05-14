@@ -26,7 +26,7 @@ function RoomCard({
         <Card.Text style={{ color: "white" }}>{summary}</Card.Text>
         <Card.Text style={{ color: "white" }}>
           <a href={urlToRoom}> Link to Room</a>
-        </Card.Text>
+        </Card.Text>1
       </Card.Body>
     </Card>
   );

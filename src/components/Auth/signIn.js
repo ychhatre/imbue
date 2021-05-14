@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import {Container, Button, Form, Card} from "react-bootstrap";
 
@@ -62,7 +62,9 @@ export default function SignIn() {
             </Form>
           </Card.Body>
         </Card>
-        
+        <div>
+          Need an account? <Link to="/signup"> Sign Up</Link>
+        </div>
           
         </Container>
         </div>
