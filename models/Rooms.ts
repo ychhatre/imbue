@@ -14,7 +14,7 @@ const RoomsSchema = new mongoose.Schema({
     type:String,
     required: true
   },
-  dailyRoomId: {
+  dailyRoomID: {
     type:String,
     required: true 
   }
