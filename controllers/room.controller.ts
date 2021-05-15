@@ -7,7 +7,8 @@ const createRoom = (req:express.Request,res:express.Response) => {
     try {
         const newRoom = new Room({
          description: req.body.description,
-         name: req.body.name
+         name: req.body.name,
+         dailyRoomID: req.body.dailyRoomID
         });
         const finalRoom = newRoom.save();
         return res.status(201).send(finalRoom);

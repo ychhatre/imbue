@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 interface IRooms extends mongoose.Document {
   name: string
   description: string
+  dailyRoomID: string 
 }
 const RoomsSchema = new mongoose.Schema({
   name: {
@@ -12,6 +13,10 @@ const RoomsSchema = new mongoose.Schema({
   description: {
     type:String,
     required: true
+  },
+  dailyRoomId: {
+    type:String,
+    required: true 
   }
 });
 
