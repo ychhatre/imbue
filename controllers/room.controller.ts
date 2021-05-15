@@ -18,7 +18,7 @@ const createRoom = (req:express.Request,res:express.Response) => {
 }
 const getSingleRoom = async (req: express.Request, res: express.Response) => {
   try {
-    const room = await Room.findById(req.query.id);
+    const room = await Room.find({dailyRoomID: req.query.id?.toString()});
     return res.status(200).send(room);
   } catch (error) {
     return res.status(502).send({ error });
