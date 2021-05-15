@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+// import logo from "../../public/logo.png"; 
 
-import {
-  Form,
-  Navbar,
-  Nav,
-  FormControl,
-  Button,
-  Modal,
-} from "react-bootstrap";
-
+import { Form, Navbar, Nav, Button, Modal } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
 
 function CreateModal(props) {
   const [name, setName] = useState("");
@@ -35,7 +29,7 @@ function CreateModal(props) {
       }),
     });
   }
-  
+
   return (
     <Modal
       {...props}
@@ -53,7 +47,7 @@ function CreateModal(props) {
           Create A Room
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ }}>
+      <Modal.Body>
         <Form onClick={handleCreate}>
           <Form.Group controlId="name">
             <Form.Label>Room Name</Form.Label>
@@ -90,33 +84,27 @@ function CreateModal(props) {
 }
 
 function CreateCompanyModal(props) {
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [show, setShow] = useState();
+  const { currentUser } = useAuth();
+
 
   async function handleCreate() {
-    const finalName = name.toLowerCase().replace(/\s+/g, '');
-    const response = await fetch("https://api.daily.co/v1/rooms", {
+    const response = await fetch("https://imbue-backend.herokuapp.com/companies", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        properties: {
-          enable_network_ui: false,
-          enable_prejoin_ui: true,
-          enable_screenshare: true,
-          enable_chat: true,
-          start_video_off: true
-        },
-        privacy: 'public',
-        name: finalName
-      })
+        name,
+        description,
+        owner: currentUser._id,
+      }),
     });
-    const result = await response.json(); 
-    
+    console.log(await response.json()); 
   }
-  
+
   return (
     <Modal
       {...props}
@@ -125,17 +113,17 @@ function CreateCompanyModal(props) {
       centered
       variant="dark"
       style={{ background: "#222629" }}
-
     >
-      <Modal.Header style={{  textAlign: "center" }}>
-        <Modal.Title style={{ textAlign: "center" }} id="on tained-modal-tit le-vcenter" >
+      <Modal.Header style={{ textAlign: "center" }}>
+        <Modal.Title
+          style={{ textAlign: "center" }}
+          id="on tained-modal-tit le-vcenter"
+        >
           Create A Company
         </Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ backgroundColor: "#222629s" }}>
-
-      
-        <Form onClick={handleCreate}>
+        <Form onSubmit={handleCreate}>
           <Form.Group controlId="name">
             <Form.Label>Company Name</Form.Label>
             <Form.Control
@@ -147,35 +135,34 @@ function CreateCompanyModal(props) {
               required
             />
           </Form.Group>
-
           <Form.Group controlId="description">
             <Form.Label>Company Description</Form.Label>
             <Form.Control
               style={{ marginBottom: "5%" }}
               type="text"
               placeholder="Enter Desription"
-
+              onChange={(e) => setDescription(e.target.value)}
               required
             />
           </Form.Group>
 
-          <Button type="submit" style={{ width: "100%", background: "#51c4d3" }}>
+          <Button
+            style={{ width: "100%", background: "#51c4d3" }}
+            onClick={handleCreate}
+          >
             Create Company
-            </Button>
+          </Button>
         </Form>
-
-
       </Modal.Body>
-
     </Modal>
   );
 }
 
 export default function NavBar(props) {
   const history = useHistory();
+  const { signOut } = useAuth();  
   const [modalShow, setModalShow] = React.useState(false);
   const [modalCreateShow, setCreateModalShow] = React.useState(false);
-  const [query, setQuery] = React.useState("")
   return (
     <Navbar
       style={{ height: "10vh", paddingLeft: "2vh", paddingRight: "2vh" }}
@@ -189,22 +176,21 @@ export default function NavBar(props) {
           </Navbar.Brand>
         </Nav.Item>
         <Nav>
-      <Nav.Link onClick={() => setModalShow(true)}> Create Room </Nav.Link>
-      <CreateModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
-      <Nav.Link onClick={() => setCreateModalShow(true)}>
-        Create Company
-      </Nav.Link>
-      <CreateCompanyModal
+        <Nav.Link href = "/companies"> Companies </Nav.Link>
+          <Nav.Link onClick={() => setModalShow(true)}> Create Room </Nav.Link>
+          <CreateModal show={modalShow} onHide={() => setModalShow(false)} />
+          <Nav.Link onClick={() => setCreateModalShow(true)}>
+            Create Company
+          </Nav.Link>
+          <CreateCompanyModal
             show={modalCreateShow}
             onHide={() => setCreateModalShow(false)}
           />
-      <Nav.Link>
-        Logout
-      </Nav.Link>
-    </Nav>
+          <Nav.Link onClick={() => {
+            signOut();
+            history.push("/signin") 
+          }}>Logout</Nav.Link>
+        </Nav>
       </Nav>
     </Navbar>
   );

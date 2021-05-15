@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./Nav";
 import {
-  Card
+  Card,
 } from "react-bootstrap";
 
 function RoomCard({
@@ -17,7 +17,7 @@ function RoomCard({
           <Card.Text style={{ color: "white", fontSize: 25}} href="#">{title}</Card.Text>
         <Card.Text style={{ color: "white" }}>{summary}</Card.Text>
         <Card.Text style={{ color: "white"}} href="#">{timeCreated.slice(5,10)}</Card.Text>
-        <span class="dot"></span>
+        <span className="dot"></span>
       </Card.Body>
     </Card>
     </a>
@@ -33,9 +33,6 @@ export default function Home() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
       },
-      // body: JSON.stringify({ properties: {
-      //   enable_network_ui: false
-      // }})
     });
     const data = await response.json();
     setRooms(data.data);
@@ -44,12 +41,12 @@ export default function Home() {
     getRooms();
   }, []);
   return (
-    <body style={{ background: "#222629"}}>
+    <div style={{ backgroundColor: "#222629", height: "100vh"}}>
       <NavBar />
       {rooms.map((room) => (
        
         <RoomCard title={room.name} key={room.id} urlToRoom={room.url} timeCreated={room.created_at}/>
       ))}
-    </body>
+    </div>
   );
 }

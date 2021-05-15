@@ -1,24 +1,28 @@
 import React, { useState } from "react";
 import { Card, Form, Button, Container } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { useHistory, Redirect } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const[role, setRole] = useState(""); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
   const { signUp } = useAuth();
 
   async function handleSubmit(e) {
     setIsSubmitting(true);
-    e.preventDefault();
-    try {
-      await signUp(name, password, email);
-      history.push("/home");
-    } catch (error) {
-      console.error(error);
+    e.preventDefault(); 
+    setEmail("")
+    setPassword(""); 
+    setName(""); 
+    const status = await signUp(name, password, email, role);
+    if (status) {
+      history.push("/");
+    } else {
+      return <Redirect to="/signup"/>
     }
   }
 
@@ -87,6 +91,7 @@ export default function SignUp() {
                     id="custom-radio"
                     label="Entrepreneur"
                     name="radio"
+                    onChange={(e) => setRole("entrepreneuer")}
                   />
                   <Form.Check
                     custom
@@ -94,6 +99,7 @@ export default function SignUp() {
                     type="radio"
                     id="custom-radio"
                     label=" Investor"
+                    onChange={(e) => setRole("investor")}
                   />
                 </Form.Group>
 

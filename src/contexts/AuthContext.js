@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
         method: "POST",
         body: JSON.stringify({
           email,
-          password,
+          password
         }),
         headers: {
           "Content-Type": "application/json",
@@ -30,43 +30,48 @@ export function AuthProvider({ children }) {
       }
     );
     const data = await response.json();
+    console.log(data); 
     const user = data["currUser"];
+ 
     if (response.status === 201) {
       setCurrentUser(user);
       Cookies.set("user", user, { expires: 7 });
+      return true; 
     } else {
       setCurrentUser(null);
+      return false; 
     }
-    return user;
+    
   };
 
-  const signUp = async (name, password, email) => {
+  const signUp = async (name, password, email, role) => {
     const response = await fetch("https://imbue-backend.herokuapp.com/users", {
       method: "POST",
       body: JSON.stringify({
         name,
         password,
         email,
+        role
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const user = await response.json();
-
     if (response.status === 201) {
       setCurrentUser(user);
       Cookies.set("user", user, { expires: 7 });
+      return true; 
     } else {
       setCurrentUser(null);
+      return false; 
     }
-    return user;
   };
 
   useEffect(() => {
     const user = Cookies.get("user");
     if (user) {
-      setCurrentUser(user);
+      setCurrentUser(JSON.parse(user));
       setLoading(false);
     } else {
       setCurrentUser(null);
