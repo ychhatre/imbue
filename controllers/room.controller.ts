@@ -6,7 +6,8 @@ const createRoom = (req:express.Request,res:express.Response) => {
     console.log(req.body); //this isnt printing 
     try {
         const newRoom = new Room({
-         description: req.body.description
+         description: req.body.description,
+         name: req.body.name
         });
         const finalRoom = newRoom.save();
         return res.status(201).send(finalRoom);
