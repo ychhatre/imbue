@@ -6,7 +6,7 @@ import { Container, Button, Form, Card } from "react-bootstrap";
 export default function SignIn() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [disabled, setDisabled] = useState(false);
+  // const [disabled, setDisabled] = useState(false);
   const history = useHistory();
   const { login } = useAuth();
 
@@ -70,7 +70,7 @@ export default function SignIn() {
                 <Button
                   type="submit"
                   style={{ width: "100%", background: "#51c4d3" }}
-                  disabled={disabled}
+                 
                 >
                   Submit
                 </Button>

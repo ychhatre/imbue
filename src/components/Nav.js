@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-// import logo from "../../public/logo.png"; 
-
 import { Form, Navbar, Nav, Button, Modal } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 
 function CreateModal(props) {
   const [name, setName] = useState("");
-
+  const [description, setDescription] = useState("");
   async function handleCreate() {
     const finalName = name.toLowerCase().replace(/\s+/g, "");
-    await fetch("https://api.daily.co/v1/rooms", {
+
+
+    const response = await fetch("https://api.daily.co/v1/rooms", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,6 +28,20 @@ function CreateModal(props) {
         name: finalName,
       }),
     });
+    const data = await response.json(); 
+    console.log(data.id); 
+    const apiResponse = await fetch("https://imbue-backend.herokuapp.com/rooms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: finalName,
+        description,
+        dailyRoomID: data.id
+      }),
+    });
+    console.log(await apiResponse.json()); 
   }
 
   return (
@@ -48,7 +62,7 @@ function CreateModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onClick={handleCreate}>
+        <Form>
           <Form.Group controlId="name">
             <Form.Label>Room Name</Form.Label>
             <Form.Control
@@ -68,12 +82,13 @@ function CreateModal(props) {
               type="text"
               placeholder="Enter Desription"
               required
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
 
           <Button
-            type="submit"
             style={{ width: "100%", background: "#51c4d3" }}
+            onClick={handleCreate}
           >
             Submit
           </Button>
@@ -86,23 +101,25 @@ function CreateModal(props) {
 function CreateCompanyModal(props) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [show, setShow] = useState();
   const { currentUser } = useAuth();
 
-
-  async function handleCreate() {
-    const response = await fetch("https://imbue-backend.herokuapp.com/companies", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        description,
-        owner: currentUser._id,
-      }),
-    });
-    console.log(await response.json()); 
+  async function handleCreate(e) {
+    e.preventDefault();
+    const response = await fetch(
+      "https://imbue-backend.herokuapp.com/companies",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          description,
+          owner: currentUser._id,
+        }),
+      }
+    );
+    console.log(await response.json());
   }
 
   return (
@@ -123,7 +140,7 @@ function CreateCompanyModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ backgroundColor: "#222629s" }}>
-        <Form onSubmit={handleCreate}>
+        <Form>
           <Form.Group controlId="name">
             <Form.Label>Company Name</Form.Label>
             <Form.Control
@@ -145,10 +162,10 @@ function CreateCompanyModal(props) {
               required
             />
           </Form.Group>
-
           <Button
+            type="submit"
             style={{ width: "100%", background: "#51c4d3" }}
-            onClick={handleCreate}
+            onSubmit={(e) => handleCreate(e)}
           >
             Create Company
           </Button>
@@ -160,7 +177,7 @@ function CreateCompanyModal(props) {
 
 export default function NavBar(props) {
   const history = useHistory();
-  const { signOut } = useAuth();  
+  const { signOut } = useAuth();
   const [modalShow, setModalShow] = React.useState(false);
   const [modalCreateShow, setCreateModalShow] = React.useState(false);
   return (
@@ -176,7 +193,7 @@ export default function NavBar(props) {
           </Navbar.Brand>
         </Nav.Item>
         <Nav>
-        <Nav.Link href = "/companies"> Companies </Nav.Link>
+          <Nav.Link href="/companies"> Companies </Nav.Link>
           <Nav.Link onClick={() => setModalShow(true)}> Create Room </Nav.Link>
           <CreateModal show={modalShow} onHide={() => setModalShow(false)} />
           <Nav.Link onClick={() => setCreateModalShow(true)}>
@@ -186,10 +203,14 @@ export default function NavBar(props) {
             show={modalCreateShow}
             onHide={() => setCreateModalShow(false)}
           />
-          <Nav.Link onClick={() => {
-            signOut();
-            history.push("/signin") 
-          }}>Logout</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              signOut();
+              history.push("/signin");
+            }}
+          >
+            Logout
+          </Nav.Link>
         </Nav>
       </Nav>
     </Navbar>
