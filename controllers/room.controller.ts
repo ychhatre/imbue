@@ -2,15 +2,14 @@ import Room from "../models/Rooms";
 import mongoose from "mongoose"; 
 import express from "express";
 
-const createRoom = (req:express.Request,res:express.Response) => {
-    console.log(req.body); //this isnt printing 
+const createRoom = async(req:express.Request,res:express.Response) => {
     try {
         const newRoom = new Room({
          description: req.body.description,
          name: req.body.name,
          dailyRoomID: req.body.dailyRoomID
         });
-        const finalRoom = newRoom.save();
+        const finalRoom = await newRoom.save();
         return res.status(201).send(finalRoom);
       } catch (error) {
         return res.status(502).send({ error });
