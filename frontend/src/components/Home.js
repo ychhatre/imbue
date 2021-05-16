@@ -44,7 +44,7 @@ export default function Home() {
       },
     });
     const dailyRooms = (await response.json()).data; 
-
+    console.log(dailyRooms); 
     for (let room of dailyRooms) {
       const roomID = room.id
       const apiResponse = await fetch(`https://imbue-backend.herokuapp.com/rooms/${roomID}`, {
