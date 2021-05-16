@@ -9,7 +9,6 @@ function CreateModal(props) {
   async function handleCreate() {
     const finalName = name.toLowerCase().replace(/\s+/g, "");
 
-
     const response = await fetch("https://api.daily.co/v1/rooms", {
       method: "POST",
       headers: {
@@ -28,20 +27,23 @@ function CreateModal(props) {
         name: finalName,
       }),
     });
-    const data = await response.json(); 
-    console.log(data.id); 
-    const apiResponse = await fetch("https://imbue-backend.herokuapp.com/rooms", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: finalName,
-        description,
-        dailyRoomID: data.id
-      }),
-    });
-    console.log(await apiResponse.json()); 
+    const data = await response.json();
+    console.log(data.id);
+    const apiResponse = await fetch(
+      "https://imbue-backend.herokuapp.com/rooms",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: finalName,
+          description,
+          dailyRoomID: data.id,
+        }),
+      }
+    );
+    console.log(await apiResponse.json());
   }
 
   return (
@@ -88,7 +90,10 @@ function CreateModal(props) {
 
           <Button
             style={{ width: "100%", background: "#51c4d3" }}
-            onClick={handleCreate}
+            onClick={(e) => {
+              handleCreate(e);
+              props.onHide(); 
+            }}
           >
             Submit
           </Button>
@@ -163,9 +168,11 @@ function CreateCompanyModal(props) {
             />
           </Form.Group>
           <Button
-            type="submit"
+            onClick={(e) => {
+              handleCreate(e);
+              props.onHide();
+            }}
             style={{ width: "100%", background: "#51c4d3" }}
-            onSubmit={(e) => handleCreate(e)}
           >
             Create Company
           </Button>
@@ -175,7 +182,7 @@ function CreateCompanyModal(props) {
   );
 }
 
-export default function NavBar(props) {
+export default function NavBar() {
   const history = useHistory();
   const { signOut } = useAuth();
   const [modalShow, setModalShow] = React.useState(false);
@@ -188,7 +195,7 @@ export default function NavBar(props) {
     >
       <Nav className="container-fluid">
         <Nav.Item>
-          <Navbar.Brand style={{ color: "#51c4d3", fontSize: "30px" }} to="/">
+          <Navbar.Brand style={{ color: "#51c4d3", fontSize: "30px" }} href="/">
             Imbue
           </Navbar.Brand>
         </Nav.Item>

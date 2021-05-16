@@ -65,7 +65,7 @@ export default function Home() {
   useEffect(() => {
     console.log(rooms); 
     getRooms();
-  }, []);
+  }, [rooms]);
   return (
     <div style={{ backgroundColor: "#222629", height: "100vh" }}>
       <NavBar />

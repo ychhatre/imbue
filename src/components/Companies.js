@@ -35,7 +35,7 @@ export default function Companies() {
   }
   useEffect(() => {
     getCompanies(); 
-  }, [])
+  }, [companies])
   return (
     <div style={{ backgroundColor: "#222629", height: "100vh"}}>
       <NavBar />
